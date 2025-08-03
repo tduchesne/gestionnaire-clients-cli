@@ -11,9 +11,10 @@ Application console de gestion de clients simple en Java.
 
 * **Modélisation de données (Java `record`)** : La classe `Client` est implémentée en tant que `record` Java, une approche moderne pour créer des objets de données immuables, concis et sécurisés.
 * **Design Pattern Factory** : Un **Factory** est utilisé pour centraliser la logique de création des objets `Client`. Cela permet de garantir que chaque `Client` est créé avec un ID unique et que les données d'entrée sont validées, ce qui rend le code plus robuste et facile à maintenir.
+* **Service de gestion des clients (`ClientService`)** : Une couche de service dédiée a été implémentée pour centraliser la logique métier (ajout, recherche de clients, etc.). Cette approche respecte le principe de la **séparation des préoccupations**.
+* **Utilisation d'interfaces et d'Optional** : Le service est programmé à l'interface (`List`) pour une meilleure flexibilité. Il utilise également la classe `Optional` pour la recherche de clients afin de garantir la sécurité du code et de prévenir les erreurs de `NullPointerException`.
 * **Tests unitaires (JUnit 5)** : Le projet inclut une couverture de tests exhaustive pour valider la logique de la `ClientFactory` (y compris les cas d'exceptions) et les fonctionnalités de base du `record Client` (`equals()`, `hashCode()`, etc.).
 * **Gestion de dépendances (Maven)** : **Maven** est utilisé pour standardiser la structure du projet, automatiser le processus de build et gérer les dépendances de manière efficace.
-
 ---
 
 
