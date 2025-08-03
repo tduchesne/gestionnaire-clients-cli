@@ -1,6 +1,10 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientTest {
@@ -43,7 +47,7 @@ public class ClientTest {
 
     @Test
     void shouldIncrementId() {
-        Client client1 = ClientFactory.createClient("Jon", "Doe","jon.doe@email.com","514-000-0000");
+        Client client1 = ClientFactory.createClient("Jon", "Doe", "jon.doe@email.com", "514-000-0000");
         Client client2 = ClientFactory.createClient("Jane", "Doe", "jane.doe@email.com", "418-111-1111");
 
         assertEquals(client1.id(), 1, "ID should be 1.");
@@ -120,6 +124,46 @@ public class ClientTest {
         });
 
         assertEquals("The phone number cannot be null or empty.", exception.getMessage());
+    }
+
+    @Test
+    void shouldAddAndReturnAllClients() {
+        ClientService clientService = new ClientService();
+        Client client1 = ClientFactory.createClient("Jon", "Doe", "jon.doe@email.com", "514-000-0000");
+        Client client2 = ClientFactory.createClient("Jane", "Doe", "jane.doe@email.com", "418-111-1111");
+        clientService.addClient(client1);
+        clientService.addClient(client2);
+
+        List<Client> expectedClients = new ArrayList<Client>();
+        expectedClients.add(client1);
+        expectedClients.add(client2);
+        List<Client> actualClients = clientService.getAllClients();
+
+        assertEquals(actualClients, expectedClients);
+    }
+
+    @Test
+    void shouldFindClientById() {
+        ClientService clientService = new ClientService();
+        Client client1 = ClientFactory.createClient("Jon", "Doe", "jon.doe@email.com", "514-000-0000");
+        Client client2 = ClientFactory.createClient("Jane", "Doe", "jane.doe@email.com", "418-111-1111");
+        clientService.addClient(client1);
+        clientService.addClient(client2);
+        Optional<Client> actualClient = clientService.findClientById(2);
+
+        assertEquals(Optional.of(client2), actualClient);
+    }
+
+    @Test
+    void findClientByIdShouldReturnFalse() {
+        ClientService clientService = new ClientService();
+        Client client1 = ClientFactory.createClient("Jon", "Doe", "jon.doe@email.com", "514-000-0000");
+        Client client2 = ClientFactory.createClient("Jane", "Doe", "jane.doe@email.com", "418-111-1111");
+        clientService.addClient(client1);
+        clientService.addClient(client2);
+        Optional<Client> actualClient = clientService.findClientById(3);
+
+        assertEquals(Optional.empty(), actualClient);
     }
 
 
