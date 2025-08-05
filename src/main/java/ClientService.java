@@ -50,16 +50,21 @@ public class ClientService {
      * Updates the information of an existing client.
      * (To be implemented)
      */
-    public void updateClient(){
-        // TODO
+    public void updateClient(long id, Client updatedClient) {
+        for (int i = 0; i < clients.size(); i++) {
+            if (clients.get(i).id() == id) {
+                clients.set(i, updatedClient);
+                break;
+            }
+        }
     }
 
     /**
      * Deletes a client from the service by their unique ID.
      * (To be implemented)
      */
-    public void deleteClient(){
-        // TODO
+    public void deleteClient(long id){
+        clients.removeIf(client -> client.id() == id);
     }
 
 }
